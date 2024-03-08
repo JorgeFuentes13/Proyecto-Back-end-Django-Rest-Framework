@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
 from .views import ListProduct, ProductoViewSet, CategoriaViewSet, AtributoViewSet, ProductoAtributoViewSet,MarcaViewSet,ProductDetail
-from .views import ListaProductosView,ProductsSearchFilter,ProductCreate,ProductUpdate
+from .views import ListaProductosView,ProductsSearchFilter,ProductCreate,ProductUpdate,FiltringProducts
 
 
 router = routers.DefaultRouter()
@@ -20,6 +20,7 @@ urlpatterns = [
     path('products-filtros', ProductsSearchFilter.as_view(), name='producto-search'),
     path('product-create',ProductCreate.as_view(),name='producto-create'),
     path('product-update/<int:pk>/',ProductUpdate.as_view(),name='producto-update'),
+    path('products-filtrosv2', FiltringProducts.as_view(), name='producto-search'),
 
     path('productos-mixin/', ListaProductosView.as_view(), name='lista_productos') #No sé hace.
 ]

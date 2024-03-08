@@ -3,6 +3,8 @@ from rest_framework import generics, mixins
 from .models import Categoria, Producto, Atributo, ProductoAtributo, Marca
 from .serializers import CategoriaSerializer, ProductoSerializer, AtributoSerializer, ProductoAtributoSerializer, MarcaSerializer
 from rest_framework import viewsets, permissions
+from django_filters.rest_framework import DjangoFilterBackend
+
 
 from rest_framework.response import Response
 
@@ -73,11 +75,19 @@ class ProductUpdate(generics.RetrieveUpdateAPIView):
 class ProductsSearchFilter(generics.ListAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
     search_fields = ['nombre','categoria__nombre_categoria', 'marca__nombre_marca']
     ordering_fields = ['nombre', 'precio']
     ordering = ['-precio']
     pagination_class = LimitOffsetPagination  # Cambio a LimitOffsetPagination
+
+
+#Lista filtrar productos
+class FiltringProducts(generics.ListAPIView):
+    queryset = Producto.objects.all()
+    serializer_class = ProductoSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['categoria__nombre_categoria','marca__nombre_marca']
 
 
 #Lista Products Mixin

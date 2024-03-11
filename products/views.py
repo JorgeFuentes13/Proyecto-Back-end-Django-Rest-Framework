@@ -75,7 +75,8 @@ class ProductUpdate(generics.RetrieveUpdateAPIView):
 class ProductsSearchFilter(generics.ListAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
-    filter_backends = [filters.SearchFilter,filters.OrderingFilter]
+    filter_backends = [filters.SearchFilter,filters.OrderingFilter,DjangoFilterBackend]
+    filterset_fields = ['categoria','marca']
     search_fields = ['nombre','categoria__nombre_categoria', 'marca__nombre_marca']
     ordering_fields = ['nombre', 'precio']
     ordering = ['-precio']
@@ -87,7 +88,7 @@ class FiltringProducts(generics.ListAPIView):
     queryset = Producto.objects.all()
     serializer_class = ProductoSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['categoria__nombre_categoria','marca__nombre_marca']
+    filterset_fields = ['categoria','marca']
 
 
 #Lista Products Mixin
